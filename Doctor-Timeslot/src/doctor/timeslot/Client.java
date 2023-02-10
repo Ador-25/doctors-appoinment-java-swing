@@ -93,6 +93,21 @@ public class Client {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        
+        
+        
+        
+      try {
+      File myObj = new File(this.getUsername()+"app.txt");
+      if (myObj.createNewFile()) {
+        System.out.println("File created: " + myObj.getName());
+      } else {
+        System.out.println("File already exists.");
+      }
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
         return true;
     }
 
@@ -115,12 +130,18 @@ public class Client {
         ArrayList<String> Users = FileHandler.ShowFileLines("clients.txt");
         System.out.println(Users);
         for(String temp: Users){
-            String user= temp.split(":",4)[1];
+            try{
+                        String user= temp.split(":",4)[1];
             String pass= temp.split(":",4)[2];
             if(u.equals(user) && p.equals(pass)){
                 curr=user;
                 return true;
             }
+            }
+            catch(Exception e){
+                continue;
+            }
+
         }
         return false;
     }

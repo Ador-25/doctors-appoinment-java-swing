@@ -30,7 +30,7 @@ public class FileHandler {
         try {
             if (!file.exists()) file.createNewFile();
             printWriter = new PrintWriter(new FileOutputStream(filename, true));
-            printWriter.write("\n"+line);
+            printWriter.write(line);
             return true;
         } catch (IOException ioex) {
             ioex.printStackTrace();
@@ -49,6 +49,10 @@ public class FileHandler {
             reader = new BufferedReader(new FileReader(filename));
             String line = reader.readLine();
             while (line != null) {
+                if(line.length()<=3){
+                    line = reader.readLine();
+                    continue;
+                }
                 list.add(line);
                 line = reader.readLine();
             }

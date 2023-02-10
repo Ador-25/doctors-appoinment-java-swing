@@ -4,9 +4,15 @@
  */
 package Jframes;
 
+import doctor.timeslot.Client;
+import doctor.timeslot.Doctor;
 import doctor.timeslot.FileHandler;
 import static doctor.timeslot.FileHandler.ShowFileLines;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,16 +24,53 @@ public class Docs extends javax.swing.JFrame {
      * Creates new form Docs
      */
     public Docs() {
+        StringBuilder sb= new StringBuilder();
+        String[] columns = new String[] {
+            "Client", "Time", "Issue"
+        };
+        ArrayList<String>lines= FileHandler.ShowFileLines(Doctor.curr+"app.txt");
+        int r= lines.size();
+        Object[][]data = new Object[r][3];
+        int c=0;
+        
+        for(String l: lines){
+            System.out.println(l);
+            data[c][0]=l.split(":",3)[1];
+            data[c][1]=l.split(":",3)[0];
+            data[c][2]=l.split(":",3)[2];
+            c++;
+        }
+        System.out.println(data[0][1]);
+                final Class[] columnClass = new Class[] {
+            String.class, String.class, String.class
+        };
+        //create table model with data
+        DefaultTableModel model = new DefaultTableModel(data, columns) {
+            @Override
+            public boolean isCellEditable(int row, int column)
+            {
+                return false;
+            }
+            @Override
+            public Class<?> getColumnClass(int columnIndex)
+            {
+                return columnClass[columnIndex];
+            }
+        };
+         
+        JTable table = new JTable(model);
+         
+        //add the table to the frame
+        this.add(new JScrollPane(table));
+         
+        this.setTitle("Table Example");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
+        this.pack();
+        this.setVisible(true);
+                initComponents();
+
         initComponents();
-        ArrayList<String> l = FileHandler.ShowFileLines("doctors.txt");
-        StringBuilder s= new StringBuilder();
-        for(String t:l){
-            String u=t.split(":",4)[1];
-            String f=t.split(":",4)[0];
-            String sp=t.split(":",4)[3];
-            t=u+"-"+f+"-"+sp+" ,";
-           s.append(t+"\n");}
-        docs.setText(s.toString());
+
     }
 
     /**
@@ -40,10 +83,18 @@ public class Docs extends javax.swing.JFrame {
     private void initComponents() {
 
         docs = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         docs.setText("jLabel1");
+
+        jButton1.setText("Home");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -52,18 +103,28 @@ public class Docs extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(docs, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(docs, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(docs, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+                new ClientHome().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -102,5 +163,6 @@ public class Docs extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel docs;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }

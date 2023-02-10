@@ -75,6 +75,8 @@ public class Doctor {
         ArrayList<String> Users = FileHandler.ShowFileLines("doctors.txt");
         boolean duplicate = false;
         for (String item: Users){
+            if(item.length()<3)
+                continue;
             if(item.split(":")[1].equals(getUsername())){
                 duplicate= true;
                 return false;
@@ -92,6 +94,21 @@ public class Doctor {
       System.out.println("An error occurred.");
       e.printStackTrace();
     }
+                
+                      try {
+      File myObj = new File(this.getUsername()+"app.txt");
+      if (myObj.createNewFile()) {
+        System.out.println("File created: " + myObj.getName());
+      } else {
+        System.out.println("File already exists.");
+      }
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+       for(int i=0;i<5;i++){
+       FileHandler.AddLineToFile(this.getUsername()+".txt", "00000");
+       }
         return true;
     }
     

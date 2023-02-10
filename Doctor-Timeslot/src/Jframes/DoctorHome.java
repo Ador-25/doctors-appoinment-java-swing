@@ -120,46 +120,9 @@ public class DoctorHome extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        try{
-        String name= Doctor.curr;
-        ArrayList<String> lines= FileHandler.ShowFileLines(name+".txt");
-        int[][]cal= new int[5][5];
-        int count=0;
-        
-        for(String line : lines){
-            cal[count++]=toArr(line);
-        }
-        if(lines.size()==5){
-                    new DoctorProfile(cal,name).setVisible(true);
+        new Docs().setVisible(true);
         this.setVisible(false);
-        }
-        }
-        catch(Exception e){
-            
-        }
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-                // TODO add your handling code here:
-        try{
-        String name= Doctor.curr;
-        ArrayList<String> lines= FileHandler.ShowFileLines(name+".txt");
-        int[][]cal= new int[5][5];
-        int count=0;
-        
-        for(String line : lines){
-            cal[count++]=toArr(line);
-        }
-        if(lines.size()==5){
-                    new DoctorProfile(cal,name).setVisible(true);
-        this.setVisible(false);
-        }
-        }
-        catch(Exception e){
-            
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -172,6 +135,28 @@ public class DoctorHome extends javax.swing.JFrame {
         new LoginDoctor().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        try{
+            String name= Doctor.curr;
+            ArrayList<String> lines= FileHandler.ShowFileLines(name+".txt");
+            int[][]cal= new int[5][5];
+            int count=0;
+
+            for(String line : lines){
+                cal[count++]=toArr(line);
+            }
+            if(lines.size()==5){
+                new DoctorProfile(cal,name,false).setVisible(true);
+                this.setVisible(false);
+            }
+        }
+        catch(Exception e){
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
